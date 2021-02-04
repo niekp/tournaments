@@ -16,7 +16,15 @@
                 <div class="card-header">{{ __('Start new tournament') }}</div>
 
                 <div class="card-body">
-                    Form
+                    <form method="POST" action="{{ route('tournament.new') }}">
+                        @csrf
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">{{ __('Title') }}</label>
+                            <input type="text" name="title" class="form-control" />
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                    </form>
                 </div>
             </div>
         </div>

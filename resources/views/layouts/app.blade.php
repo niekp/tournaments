@@ -35,7 +35,7 @@
                     <ul class="navbar-nav mr-auto">
                         @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">{{ __('Tournaments') }}</a>
+                            <a class="nav-link" href="{{ route('tournaments') }}">{{ __('Tournaments') }}</a>
                         </li>
                         @endauth
                     </ul>

@@ -17,10 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/tournaments', [App\Http\Controllers\TournamentController::class, 'index'])->name('tournaments');
+Route::post('/tournaments', [App\Http\Controllers\TournamentController::class, 'new'])->name('tournament.new');
