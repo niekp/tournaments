@@ -5,16 +5,18 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">{{ __('Tournaments') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                    - Toon lopende tournamenten
+                </div>
+            </div>
 
-                    {{ __('You are logged in!') }}
+            <div class="card mt-3">
+                <div class="card-header">{{ __('Start new tournament') }}</div>
+
+                <div class="card-body">
+                    Form
                 </div>
             </div>
         </div>
