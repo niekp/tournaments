@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tournament;
 use Illuminate\Http\Request;
 
 class TournamentController extends Controller
@@ -21,12 +22,22 @@ class TournamentController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return view('tournaments');
+    public function index() {
+        return view('tournaments', [
+            'tournaments' => Tournament::all()
+        ]);
     }
 
-    public function new($title) {
-        return $title;
+    public function new(Request $request) {
+        $validatedData = $request->validate([
+            'title' => ['required', 'unique:tournaments', 'max:255'],
+        ]);
+
+        $tournament = Tournament::create([
+            'title' => $validatedData['title']
+        ]);
+
+        //return redirect()->route('tournaments', ['id' => 1]);
+        return redirect()->route('tournaments');
     }
 }

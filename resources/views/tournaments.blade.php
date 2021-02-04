@@ -8,7 +8,11 @@
                 <div class="card-header">{{ __('Tournaments') }}</div>
 
                 <div class="card-body">
-                    - Toon lopende tournamenten
+                    <ul>
+                    @foreach ($tournaments as $tournament)
+                        <li>{{ $tournament->title }}</li>
+                    @endforeach
+                    </ul>
                 </div>
             </div>
 
@@ -20,7 +24,10 @@
                         @csrf
                         <div class="form-group">
                             <label for="exampleInputEmail1">{{ __('Title') }}</label>
-                            <input type="text" name="title" class="form-control" />
+                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" />
+                            @error('title')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         
                         <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
