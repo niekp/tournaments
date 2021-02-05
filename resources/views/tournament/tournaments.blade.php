@@ -25,6 +25,7 @@
                                         @csrf
                                         <button type="submit" class="btn btn-link"><i class="fas fa-trash"></i></button>
                                     </form>
+                                    <a href="{{ route('games', [ 'guid' => $tournament->guid ]) }}"><i class="fas fa-gamepad"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -49,9 +50,7 @@
 
                         <div class="form-group">
                             <label for="players">{{ __('Players') }}</label>
-                            <textarea name="players" rows="10" class="form-control @error('players') is-invalid @enderror" aria-describedby="playersHelp">
-                                {{ old('players') }}
-                            </textarea>
+                            <textarea name="players" rows="10" class="form-control @error('players') is-invalid @enderror" aria-describedby="playersHelp">{{ old('players') }}</textarea>
                             @error('players')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
