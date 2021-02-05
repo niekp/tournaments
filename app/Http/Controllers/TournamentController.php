@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tournament;
-use App\Helpers\Guid;
+use Illuminate\Support\Str;
 use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -91,7 +91,7 @@ class TournamentController extends Controller
         $tournament = new Tournament;
         $tournament->title = $validatedData['title'];
         $tournament->user_id = Auth::user()->id;
-        $tournament->guid = Guid::generate();
+        $tournament->guid = Str::uuid();
         $tournament->save();
 
         $this->savePlayers($tournament, $validatedData['players']);

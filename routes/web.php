@@ -18,3 +18,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::post('/matches/{guid}', [App\Http\Controllers\MatchController::class, 'index'])->name('matches');
+
