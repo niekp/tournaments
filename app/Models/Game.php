@@ -42,4 +42,12 @@ class Game extends Model
     {
         return $this->belongsTo(Tournament::class);
     }
+
+    public function getWinnerText() {
+        if ($this->winner) {
+            return sprintf("%d - %d (%s)", $this->scorePlayer1, $this->scorePlayer2, $this->winner->name);
+        }
+
+        return "";
+    }
 }
