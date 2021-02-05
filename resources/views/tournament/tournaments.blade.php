@@ -40,11 +40,25 @@
                     <form method="POST" action="{{ route('tournament.new') }}">
                         @csrf
                         <div class="form-group">
-                            <label for="exampleInputEmail1">{{ __('Title') }}</label>
-                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" />
+                            <label for="title">{{ __('Title') }}</label>
+                            <input type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" />
                             @error('title')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="players">{{ __('Players') }}</label>
+                            <textarea name="players" rows="10" class="form-control @error('players') is-invalid @enderror" aria-describedby="playersHelp">
+                                {{ old('players') }}
+                            </textarea>
+                            @error('players')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+
+                            <small id="playersHelp" class="form-text text-muted">
+                                {{ __('Enter one player name per line') }}
+                              </small>
                         </div>
                         
                         <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>

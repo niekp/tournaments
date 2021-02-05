@@ -14,7 +14,7 @@ class CreateTournamentsPlayersTable extends Migration
     public function up()
     {
         Schema::create('tournaments_players', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');        
+            $table->id();
             $table->unsignedBigInteger('tournament_id');
             $table->foreign('tournament_id')
                   ->references('id')
