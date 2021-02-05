@@ -40,7 +40,7 @@ class TournamentController extends Controller
         $validatedData = $request->validate([
             'title' => ['required', 'max:255'],
         ]);
-//die(print_r(Auth::user()->id));
+
         $tournament = new Tournament;
         $tournament->title = $validatedData['title'];
         $tournament->user_id = Auth::user()->id;
@@ -78,6 +78,19 @@ class TournamentController extends Controller
         if ($tournament = Auth::User()->tournaments->firstWhere('id', $id)) {
             $tournament->title = $validatedData['title'];
             $tournament->save();
+        }
+
+        return redirect()->route('tournaments');
+    }
+
+    /**
+     * Delete a tournament
+     *
+     * @return \Illuminate\Support\Facades\Redirect
+     */
+    public function delete($id) {
+        if ($tournament = Auth::User()->tournaments->firstWhere('id', $id)) {
+            $tournament->delete();
         }
 
         return redirect()->route('tournaments');

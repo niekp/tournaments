@@ -19,7 +19,13 @@
                         @foreach ($tournaments as $tournament)
                             <tr>
                                 <td>{{ $tournament->title }}</td>
-		                        <td><a href="{{ route('tournament.edit', [ 'id' => $tournament->id ]) }}"><i class="fas fa-edit"></i></a></td>
+		                        <td>
+                                    <a href="{{ route('tournament.edit', [ 'id' => $tournament->id ]) }}"><i class="fas fa-edit"></i></a>
+                                    <form method="POST" action="{{ route('tournament.delete', [ 'id' => $tournament->id ]) }}" style="display: inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-link"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

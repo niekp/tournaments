@@ -31,4 +31,5 @@ Route::get('/tournaments/edit/{id}', [App\Http\Controllers\TournamentController:
     });
 
 Route::post('/tournaments/edit/{id}', [App\Http\Controllers\TournamentController::class, 'editSave'])->name('tournament.edit.save');
+Route::post('/tournaments/delete/{id}', [App\Http\Controllers\TournamentController::class, 'delete'])->name('tournament.delete');
 
