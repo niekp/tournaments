@@ -40,4 +40,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the tournaments associated with the user.
+     */
+    public function tournaments()
+    {
+        return $this->hasMany(Tournament::class);
+    }
+
 }

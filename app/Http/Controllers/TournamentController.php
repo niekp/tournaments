@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tournament;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TournamentController extends Controller
 {
@@ -24,7 +26,7 @@ class TournamentController extends Controller
      */
     public function index() {
         return view('tournament.tournaments', [
-            'tournaments' => Tournament::all()
+            'tournaments' => Auth::user()->tournaments
         ]);
     }
 
@@ -38,10 +40,11 @@ class TournamentController extends Controller
         $validatedData = $request->validate([
             'title' => ['required', 'max:255'],
         ]);
-
-        $tournament = Tournament::create([
-            'title' => $validatedData['title']
-        ]);
+//die(print_r(Auth::user()->id));
+        $tournament = new Tournament;
+        $tournament->title = $validatedData['title'];
+        $tournament->user_id = Auth::user()->id;
+        $tournament->save();
 
         return redirect()->route('tournaments');
     }
@@ -52,13 +55,17 @@ class TournamentController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function edit($id) {
-        return view('tournament.edit', [
-            'tournament' => Tournament::findOrFail($id)
-        ]);
+        if ($tournament = Auth::User()->tournaments->firstWhere('id', $id)) {
+            return view('tournament.edit', [
+                'tournament' => $tournament
+            ]);
+        }
+
+        return redirect()->route('tournaments');
     }
 
     /**
-     * Add a new tournament
+     * Save changes in tournament
      
      * @param \Illuminate\Http\Request
      * @return \Illuminate\Support\Facades\Redirect
@@ -68,9 +75,10 @@ class TournamentController extends Controller
             'title' => ['required', 'max:255'],
         ]);
 
-        $tournament = Tournament::findOrFail($id);
-        $tournament->title = $validatedData['title'];
-        $tournament->save();
+        if ($tournament = Auth::User()->tournaments->firstWhere('id', $id)) {
+            $tournament->title = $validatedData['title'];
+            $tournament->save();
+        }
 
         return redirect()->route('tournaments');
     }

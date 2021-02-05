@@ -13,7 +13,7 @@
             @enderror
         </div>
         
-        <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+        <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
         <a class="btn btn-primary" href="{{ route('tournaments') }}">{{ __('Back') }}</a>
     </form>
 

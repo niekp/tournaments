@@ -10,4 +10,13 @@ class Tournament extends Model
     use HasFactory;
 
     protected $fillable = ['title'];
+
+    /**
+     * Get the user that created the tournament.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
