@@ -49,4 +49,12 @@ class User extends Authenticatable
         return $this->hasMany(Tournament::class);
     }
 
+    /**
+     * Get the players created on this user
+     */
+    public function players()
+    {
+        return $this->hasMany(Player::class);
+    }
+
 }

@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tournament extends Model
+class Player extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title'];
-
-    protected $guarded = ['guid'];
+    protected $fillable = ['name'];
 
     /**
      * Get the user that created the tournament.
@@ -22,11 +20,11 @@ class Tournament extends Model
     }
 
     /**
-     * Get the players of this tournament
+     * Get the tournaments this player played in
      */
-    public function players()
+    public function tournaments()
     {
-        return $this->hasMany(Player::class);
+        return $this->hasMany(Tournament::class);
     }
 
 }
