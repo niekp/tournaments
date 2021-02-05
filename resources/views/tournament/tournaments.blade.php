@@ -8,11 +8,22 @@
                 <div class="card-header">{{ __('Tournaments') }}</div>
 
                 <div class="card-body">
-                    <ul>
-                    @foreach ($tournaments as $tournament)
-                        <li>{{ $tournament->title }}</li>
-                    @endforeach
-                    </ul>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>{{ __('Title') }}</th>
+                                <th class="w-25">{{ __('Actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($tournaments as $tournament)
+                            <tr>
+                                <td>{{ $tournament->title }}</td>
+		                        <td><a href="{{ route('tournament.edit', [ 'id' => $tournament->id ]) }}"><i class="fas fa-edit"></i></a></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

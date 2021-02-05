@@ -9,7 +9,5 @@ class Tournament extends Model
 {
     use HasFactory;
 
-    public $blaat;
-
     protected $fillable = ['title'];
 }
