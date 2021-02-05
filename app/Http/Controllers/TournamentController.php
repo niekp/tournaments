@@ -31,7 +31,6 @@ class TournamentController extends Controller
         ]);
     }
 
-         
     /**
      * Save the players to the tournament
      *
