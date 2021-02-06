@@ -28,4 +28,6 @@ Route::post('/tournaments/delete/{id}', [App\Http\Controllers\TournamentControll
 
 /* Games */
 Route::get('/games/{guid}', [App\Http\Controllers\GameController::class, 'index'])->name('games');
+Route::get('/games/{guid}/{id}', [App\Http\Controllers\GameController::class, 'getGameModal'])->name('game.modal');
+Route::post('/game/save/{guid}/{id}', [App\Http\Controllers\GameController::class, 'save'])->name('game.save');
 

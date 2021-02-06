@@ -1,0 +1,6 @@
+[data-game] {
+    cursor: pointer;
+}
+[data-game]:hover {
+    background-color: #6cb2eb;
+}
