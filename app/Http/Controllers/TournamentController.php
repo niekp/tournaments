@@ -7,16 +7,23 @@ use Illuminate\Support\Str;
 use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\GameRepository;
+use App\Repositories\TournamentRepository;
 
 class TournamentController extends Controller
 {
+    private $gameRepository;
+    private $tournamentRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(GameRepository $gameRepository, TournamentRepository $tournamentRepository)
     {
+        $this->gameRepository = $gameRepository;
+        $this->tournamentRepository = $tournamentRepository;
         $this->middleware('auth');
     }
 
@@ -32,51 +39,6 @@ class TournamentController extends Controller
     }
 
     /**
-     * Save the players to the tournament
-     *
-     * @param  Tournament $tournament
-     * @param  string $players | seperated by \n
-     * @return void
-     */
-    private function savePlayers(Tournament $tournament, string $players) {
-        // Clean up input
-        $newPlayers = array_map('trim', 
-            array_unique(
-                array_filter(
-                    explode("\n", $players)
-                )
-            )
-        );
-
-        // Load current players to check against before attaching.
-        $currentPlayers = $tournament->players;
-
-        foreach ($newPlayers as $name) {
-            // Check if the player already exists, if not create it.
-            if (!$player = Auth::user()->players->where('name', $name)->first()) {
-                $player = new Player;
-                $player->name = $name;
-                $player->user_id = Auth::user()->id;
-                $player->save();
-            }
-            
-            // Attach the player to the tournament
-            if (!$currentPlayers->contains($player)) {
-                $tournament->players()->attach($player);
-            }
-        }
-
-        // Filter deleted players and remove them.
-        $deletedPlayers = $tournament->players->filter(function ($player, $key) use ($newPlayers) {
-            return !in_array($player->name, $newPlayers);
-        });
-
-        foreach ($deletedPlayers as $player) {
-            $tournament->players()->detach($player);
-        }
-    }
-
-    /**
      * Add a new tournament
      
      * @param \Illuminate\Http\Request
@@ -88,13 +50,10 @@ class TournamentController extends Controller
             'players' => ['required'],
         ]);
 
-        $tournament = new Tournament;
-        $tournament->title = $validatedData['title'];
-        $tournament->user_id = Auth::user()->id;
-        $tournament->guid = Str::uuid();
-        $tournament->save();
+        $tournament = $this->tournamentRepository->create($validatedData['title']);
 
-        $this->savePlayers($tournament, $validatedData['players']);
+        $this->tournamentRepository->linkPlayers($tournament, $validatedData['players']);
+        $this->gameRepository->generateGames($tournament->id);
         return redirect()->route('tournaments');
     }
 
@@ -125,12 +84,9 @@ class TournamentController extends Controller
             'players' => ['required'],
         ]);
 
-        if ($tournament = Auth::User()->tournaments->firstWhere('id', $id)) {
-            $tournament->title = $validatedData['title'];
-            $tournament->save();
-        }
-        
-        $this->savePlayers($tournament, $validatedData['players']);
+        $tournament = $this->tournamentRepository->edit($id, $validatedData['title']);
+        $this->tournamentRepository->linkPlayers($tournament, $validatedData['players']);
+        $this->gameRepository->generateGames($tournament->id);
 
         return redirect()->route('tournaments');
     }
@@ -141,10 +97,7 @@ class TournamentController extends Controller
      * @return \Illuminate\Support\Facades\Redirect
      */
     public function delete(int $id) {
-        if ($tournament = Auth::User()->tournaments->firstWhere('id', $id)) {
-            $tournament->delete();
-        }
-
+        $this->tournamentRepository->delete($id);
         return redirect()->route('tournaments');
     }
 
