@@ -13,14 +13,14 @@
                     <p>
                     <div class="form-group">
                         <label>{{ __('Score :name', ['name' => $game->player1->name]) }}</label>
-                        <input type="text" name="scorePlayer1" class="form-control @error('scorePlayer1') is-invalid @enderror" value="{{ !!old('scorePlayer1') ? old('scorePlayer1') : $game->scorePlayer1 }}" />
+                        <input type="number" min="0" name="scorePlayer1" class="form-control @error('scorePlayer1') is-invalid @enderror" value="{{ !!old('scorePlayer1') ? old('scorePlayer1') : $game->scorePlayer1 }}" />
                         @error('scorePlayer1')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label>{{ __('Score :name', ['name' => $game->player2->name]) }}</label>
-                        <input type="text" name="scorePlayer2" class="form-control @error('scorePlayer2') is-invalid @enderror" value="{{ !!old('scorePlayer2') ? old('scorePlayer2') : $game->scorePlayer2 }}" />
+                        <input type="number" min="0" name="scorePlayer2" class="form-control @error('scorePlayer2') is-invalid @enderror" value="{{ !!old('scorePlayer2') ? old('scorePlayer2') : $game->scorePlayer2 }}" />
                         @error('scorePlayer2')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
