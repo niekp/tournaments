@@ -39,14 +39,14 @@ class Game extends Model
         return $this->belongsTo(Tournament::class);
     }
 
-    public function getWinnerText() {
+    public function getGameText() {
         if ($this->winner) {
             return sprintf("%d - %d (%s)", 
                 $this->scorePlayer1, 
                 $this->scorePlayer2, 
                 $this->winner->name
             );
-        } else if ($this->scorePlayer1 == $this->scorePlayer2 && !!$this->scorePlayer1) {
+        } else if ($this->scorePlayer1 == $this->scorePlayer2 && $this->scorePlayer1 != null) {
             return sprintf("%d - %d", 
                 $this->scorePlayer1, 
                 $this->scorePlayer2

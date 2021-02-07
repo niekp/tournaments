@@ -7,13 +7,16 @@ use App\Models\Player;
 use App\Models\Game;
 use App\Models\Tournament;
 use App\Repositories\GameRepository;
+use App\Repositories\StatisticsRepository;
 use Illuminate\Support\Facades\Redirect;
 
 class GameController extends Controller {    
     private $gameRepository;
+    private $statisticsRepository;
 
-    public function __construct(GameRepository $gameRepository) {
+    public function __construct(GameRepository $gameRepository, StatisticsRepository $statisticsRepository) {
         $this->gameRepository = $gameRepository;
+        $this->statisticsRepository = $statisticsRepository;
     }
 
     // No auth middleware to make the link to a tournament sharable
@@ -30,7 +33,8 @@ class GameController extends Controller {
         }
 
         return view("game.index", [
-            'tournament' => $tournament
+            'tournament' => $tournament,
+            'statistics' => $this->statisticsRepository->getStatistics($tournament)
         ]);
     }
     

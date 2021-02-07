@@ -20,7 +20,7 @@
                 @foreach ($tournament->players->sort() as $player2)
                     @if ($player1->id != $player2->id)
                     <td data-game="{{ route('game.modal', [ 'guid' => $tournament->guid, 'id' => $tournament->getGame($player1, $player2)->id ]) }}" >
-                        {{ $tournament->getGame($player1, $player2)->getWinnerText() }}
+                        {{ $tournament->getGame($player1, $player2)->getGameText() }}
                     </td>
                     @else
                     <td>
@@ -28,6 +28,26 @@
                     </td>
                     @endif
                 @endforeach
+            </tr>
+        @endforeach
+    </table>
+
+    <h3>{{ __('Statistics') }}</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>{{ __('Player') }}</th>
+                <th>{{ __('Games played') }}</th>
+                <th>{{ __('Games won') }}</th>
+                <th>{{ __('Won %') }}</th>
+            </tr>
+        </thead>
+        @foreach ($statistics as $statistic)
+            <tr>
+                <td>{{ $statistic->player->name }}</td>
+                <td>{{ $statistic->gamesPlayed }}</td>
+                <td>{{ $statistic->gamesWon }}</td>
+                <td>{{ $statistic->getWinPercentage() }}%</td>
             </tr>
         @endforeach
     </table>
