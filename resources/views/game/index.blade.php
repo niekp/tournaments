@@ -9,16 +9,16 @@
         <thead>
             <tr>
                 <th>&nbsp;</th>
-                @foreach ($tournament->players->sort() as $player)
+                @foreach ($tournament->players->sortBy('name') as $player)
                     <th>{{ $player->name }}</th>
                 @endforeach
             </tr>
         </thead>
-        @foreach ($tournament->players->sort() as $player1)
+        @foreach ($tournament->players->sortBy('name') as $player1)
             <tr>
                 <th>{{ $player1->name }}</th>
 
-                @foreach ($tournament->players->sort() as $player2)
+                @foreach ($tournament->players->sortBy('name') as $player2)
                     @if ($player1->id != $player2->id)
                     <td data-game="{{ route('game.modal', [ 'guid' => $tournament->guid, 'id' => $tournament->getGame($player1, $player2)->id ]) }}" >
                         {{ $tournament->getGame($player1, $player2)->getGameText() }}

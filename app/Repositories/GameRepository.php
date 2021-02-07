@@ -59,8 +59,8 @@ class GameRepository
 
         $playedGames = $tournament->games;
         
-        foreach ($tournament->players->sort() as $player1) {
-            foreach ($tournament->players->sort() as $player2) {
+        foreach ($tournament->players as $player1) {
+            foreach ($tournament->players as $player2) {
                 if ($player1->id == $player2->id) {
                     continue;
                 }
