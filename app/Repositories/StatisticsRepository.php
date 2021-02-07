@@ -34,11 +34,11 @@ class StatisticsRepository {
         }
 
         usort($stats, function($a, $b) {
-            if ($a->gamesWon == $b->gamesWon) {
+            if ($a->getWinPercentage() == $b->getWinPercentage()) {
                 return 0;
             }
 
-            return ($a->gamesWon < $b->gamesWon) ? 1 : -1;
+            return ($a->getWinPercentage() < $b->getWinPercentage()) ? 1 : -1;
         });
 
         return $stats;
