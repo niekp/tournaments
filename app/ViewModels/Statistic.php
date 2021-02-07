@@ -2,7 +2,6 @@
 
 namespace App\ViewModels;
 use App\Models\Player;
-
 class Statistic
 {
     public function __construct(Player $player, int $gamesPlayed, int $gamesWon) {

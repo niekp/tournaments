@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    <button class="btn btn-light float-right" data-copy-url>{{ __('Copy sharable URL') }}</button>
     <h3>{{ $tournament->title }}</h3>
     <p><small class="text-muted">{{ __('Click on a cell to enter the score') }}</small></p>
     <table class="table table-hover" data-games>
