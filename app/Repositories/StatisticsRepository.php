@@ -17,17 +17,13 @@ class StatisticsRepository {
         $stats = [];
         foreach ($tournament->players as $player) {
             $played = $tournament->games()
-                    ->where('player1_id', $player->id)
-                    ->whereNotNull('scorePlayer1')
-                    ->whereNotNull('scorePlayer2')
-                    ->count();
-
-            $played += $tournament->games()
-                ->where('player2_id', $player->id)
                 ->whereNotNull('scorePlayer1')
                 ->whereNotNull('scorePlayer2')
-                ->count();
-                
+                ->where(function($query) use ($player) {
+                    $query->where('player1_id', $player->id)
+                          ->orWhere('player2_id', $player->id);
+                })->count();
+            
             $won = $tournament->games()->where('winner_id', $player->id)->count();
 
             array_push($stats, new Statistic($player, $played, $won));
